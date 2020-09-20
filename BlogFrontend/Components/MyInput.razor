@@ -1,0 +1,8 @@
+﻿
+<input @bind="@SomeString" @bind:event="oninput" />
+<div>@SomeString</div>
+
+@code {
+    
+    public string SomeString { get; set; } = string.Empty;
+}

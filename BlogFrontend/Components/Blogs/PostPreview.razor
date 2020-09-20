@@ -1,0 +1,21 @@
+﻿<div class="post-preview">
+    <a @onclick="OnPostLinkClicked" @onclick:preventDefault="true" style="cursor:grabbing" href="">
+        <h2>
+            @Blog.Title
+        </h2>
+        <h3>
+            @Blog.SubTitle
+        </h3>
+    </a>
+    <p class="post-meta">
+        Posted by @Blog.AuthorName on @(Blog.Time.ToString())
+    </p>
+    <p>
+        @if (Blog.Content != null)
+        {
+            var markup = new MarkupString(Blog.Content);
+            @markup
+        }
+    </p>
+</div>
+<hr>

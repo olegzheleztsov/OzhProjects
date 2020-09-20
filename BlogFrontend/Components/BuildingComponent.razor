@@ -1,0 +1,32 @@
+﻿<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Fllor</th>
+            <th>Persons</th>
+            <th>Elevator</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Building != null)
+        {
+            foreach (var floor in Building.Floors.OrderByDescending(f => f.FloorNumber))
+            {
+                <FloorComponent ElevatorPersonCount="Building.Elevator.PersonCount"  
+                                IsElevatorCurrentFloor="@(IsElevatorFloor(floor))" 
+                                Floor="floor" ElevatorTargetFloor="Building.Elevator.TargetFloor"/>
+            }
+        } else
+        {
+            <div>Building is null</div>
+        }
+    </tbody>
+</table>
+
+@code {
+
+    [Parameter]
+    public BuildingStateDto Building { get; set; }
+
+    private bool IsElevatorFloor(FloorStateDto floor)
+        => floor.FloorNumber == Building.Elevator.CurrentFloor;
+}

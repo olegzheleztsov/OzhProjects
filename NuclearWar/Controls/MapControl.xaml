@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="NuclearWar.Controls.MapControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NuclearWar.Controls"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:command="http://www.galasoft.ch/mvvmlight"
+             xmlns:vm="clr-namespace:NuclearWar.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" x:Name="mapControl">
+    
+    
+    <Border Grid.Column="2" ClipToBounds="True" x:Name="canvasBorder">
+        <ItemsControl ItemsSource="{Binding Path=MapObjects}">
+            <ItemsControl.Resources>
+                <DataTemplate DataType="{x:Type vm:WorldNodeViewModel}">
+                    <Image Source="{Binding Path=MapFile}" Stretch="Uniform"
+                           Width="{Binding Width}" Height="{Binding Height}" />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:NuclearCityViewModel}">
+                    <local:NuclearCity Width="{Binding Width}" Height="{Binding Height}" CityBackground="Beige"/>
+                </DataTemplate>
+            </ItemsControl.Resources>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas  RenderTransformOrigin="0.5, 0.5" IsItemsHost="True">
+                        <Canvas.RenderTransform>
+                            <TransformGroup>
+                                <TransformGroup.Children>
+                                    <TranslateTransform  X="{Binding TranslateX}" Y="{Binding TranslateY}" />
+                                    <ScaleTransform  ScaleX="{Binding ZoomX}" ScaleY="{Binding ZoomY}" />
+                                </TransformGroup.Children>
+                            </TransformGroup>
+                        </Canvas.RenderTransform>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseWheel">
+                                <command:EventToCommand Command="{Binding Path=ZoomMap}" PassEventArgsToCommand="True" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <command:EventToCommand Command="{Binding Path=StartPan}" PassEventArgsToCommand="True" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseMove">
+                                <command:EventToCommand Command="{Binding Path=Pan}" PassEventArgsToCommand="True" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                <command:EventToCommand Command="{Binding Path=EndPan}" PassEventArgsToCommand="True" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Canvas>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="{x:Type ContentPresenter}">
+                    <Setter Property="Canvas.Left" Value="{Binding Path=X}" />
+                    <Setter Property="Canvas.Right" Value="{Binding Path=Y}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+    </Border>
+    
+</UserControl>

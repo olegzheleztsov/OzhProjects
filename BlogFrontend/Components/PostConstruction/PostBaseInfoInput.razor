@@ -1,0 +1,14 @@
+﻿<div>
+    <p>
+        <MatTextField @bind-Value="@PostBaseInfo.Title" Label="Title" FullWidth="true" @ref="@_titleField"
+                       OnKeyPress="@(() => OnKeyPress(FieldName.Title))"></MatTextField>
+    </p>
+    <p>
+        <MatTextField @bind-Value="@PostBaseInfo.SubTitle" Label="Sub Title" FullWidth="true" @ref="@_subTitleField"
+                       OnKeyPress="@(() => OnKeyPress(FieldName.SubTitle))"></MatTextField>
+    </p>
+    <p>
+        <MatTextField @bind-Value="@PostBaseInfo.Author" Label="Author" FullWidth="true" @ref="@_authorField"
+                       OnKeyPress="@(() => OnKeyPress(FieldName.Author))"></MatTextField>
+    </p>
+</div>

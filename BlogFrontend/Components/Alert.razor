@@ -1,0 +1,13 @@
+﻿@if (Visible)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        @AlertContent
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" @onclick="OnCloseClick">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+@code {
+    public static RenderFragment DefaultAlertContent = @<div></div>;
+}

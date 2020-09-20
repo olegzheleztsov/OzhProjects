@@ -1,0 +1,34 @@
+﻿@page "/post/edit/{id}"
+
+@if (Blog == null)
+{
+    <IndeterminateProgress></IndeterminateProgress>
+}
+else
+{
+    <EditForm Model="Blog" class="border rounded m-5 p-5 blog-editor-back" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">
+        <DataAnnotationsValidator />
+        <p>
+            <MatTextField TValue="string" @ref="@_titleField" @bind-Value="Blog.Title" Label="Title" FullWidth="true" OnKeyPress="@((args) => OnKeyPress(EditFiledType.Title))"></MatTextField>
+            <ValidationMessage For="@(() => Blog.Title)" />
+        </p>
+        <p>
+            <MatTextField TValue="string" @ref="@_subTitleField" @bind-Value="Blog.SubTitle" Label="Sub Title" FullWidth="true" OnKeyPress="@((args) => OnKeyPress(EditFiledType.SubTitle))"></MatTextField>
+            <ValidationMessage For="@(() => Blog.SubTitle)" />
+        </p>
+        <p>
+            <MatTextField TValue="string" @ref="@_authorField" @bind-Value="Blog.AuthorName" Label="Author" FullWidth="true" OnKeyPress="@((args) => OnKeyPress(EditFiledType.Author))"></MatTextField>
+            <ValidationMessage For="@(() => Blog.AuthorName)" />
+        </p>
+        <p>
+            <MatTextField TValue="string" @ref="@_contentField" @bind-Value="Blog.Content" Label="Standard" TextArea="true" FullWidth="true" OnKeyPress="@((args) => OnKeyPress(EditFiledType.Content))"></MatTextField>
+            <ValidationMessage For="@(() => Blog.Content)" />
+        </p>
+        <div style="display: flex; flex-direction: row; justify-content: right; align-items: center; padding: 8px; margin: 8px">
+            <MatButton Type="submit" Raised="true" Class="blog-button">Save</MatButton>
+            <MatButton Raised="true" OnClick="OnDiscard" Class="blog-button">Discard</MatButton>
+        </div>
+
+    </EditForm>
+}
+

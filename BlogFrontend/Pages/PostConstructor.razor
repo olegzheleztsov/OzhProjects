@@ -1,0 +1,25 @@
+﻿@page "/blogconstruct"
+
+
+<div class="mat-layout-grid">
+    <div class="mat-layout-grid-inner">
+        <div class="mat-layout-grid-cell  mat-layout-grid-cell-align-middle mat-layout-grid-cell-span-9">
+            <ElementModelSelection ConstructionModelSelected="OnModelSelected"></ElementModelSelection>
+        </div>
+        <div class="mat-layout-grid-cell  mat-layout-grid-cell-align-middle mat-layout-grid-cell-span-3">
+            <MatButton Outlined="true" OnClick="OnSavePost">Save Post</MatButton>
+        </div>
+    </div>
+</div>
+
+<PostBaseInfoInput @ref="_postBaseInfoInput"></PostBaseInfoInput>
+
+<div>
+    @foreach (var (model, renderFragment) in _modelViews)
+    {
+        <ElementConstructionView Model="model" ItemRemoved="OnItemRemoved">
+            @renderFragment
+        </ElementConstructionView>
+    }
+</div>
+

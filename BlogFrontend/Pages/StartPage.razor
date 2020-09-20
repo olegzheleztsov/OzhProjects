@@ -1,0 +1,18 @@
+﻿@page "/"
+
+
+@if (_blogs?.Count() > 0)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+
+                @foreach (var blog in _blogs)
+                {
+                    <PostPreview @key="blog.Id" Blog="blog"/>
+                }
+                
+            </div>
+        </div>
+    </div>
+}

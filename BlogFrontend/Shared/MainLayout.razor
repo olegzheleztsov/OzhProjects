@@ -1,0 +1,30 @@
+﻿@inherits LayoutComponentBase
+
+<Alert @ref="AlertObject" />
+
+<MatAppBarContainer>
+    <MatAppBar Fixed="true">
+        <MatAppBarRow>
+            <MatAppBarSection>
+                @*<MatIconButton Icon="menu"></MatIconButton>*@
+                <p style="margin-left: 8px">
+                    <MatIconButton Icon="menu" OnClick="@(async (args) => await OnMenu(args))" @ref="_menuButton"></MatIconButton>
+                    <MatMenu @ref="_menu">
+                        <MatList>
+                            <MatListItem OnClick="@((args) => NavigateTo(ROOT_PATH))">Main</MatListItem>
+                            <MatListItem OnClick="@((args) => NavigateTo(BLOG_CONSTRUCT_PATH))">Write Post</MatListItem>
+                        </MatList>
+                    </MatMenu>
+                </p>
+                <MatAppBarTitle>Oleh Zheleztsov's Blog</MatAppBarTitle>
+            </MatAppBarSection>
+            @*<MatAppBarSection Align="@MatAppBarSectionAlign.End">
+                <MatIconButton Icon="favorite"></MatIconButton>
+            </MatAppBarSection>*@
+        </MatAppBarRow>
+    </MatAppBar>
+ 
+    <MatAppBarContent>
+        @Body
+    </MatAppBarContent>
+</MatAppBarContainer>

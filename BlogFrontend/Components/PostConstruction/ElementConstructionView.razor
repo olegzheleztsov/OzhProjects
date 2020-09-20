@@ -1,0 +1,22 @@
+﻿@using ElevatorClient.Models.PostConstruction
+@using Microsoft.Extensions.Logging
+@implements IAsyncDisposable
+@inject ILogger<ElementConstructionView> Logger
+
+<div class="mat-layout=grid">
+    <div class="mat-layout-grid-inner">
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+            @ChildContent
+        </div>
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2 mat-layout-grid-cell-align-middle">
+            <MatButton Outlined="true" OnClick="@OnRemoveItem">Remove Item</MatButton>
+        </div>
+        @if (_modelPreviewFragment != null)
+        {
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-4" style="background: #7abaff; margin: 24px">
+                @_modelPreviewFragment
+                </div>                           
+        }
+
+    </div>
+</div>

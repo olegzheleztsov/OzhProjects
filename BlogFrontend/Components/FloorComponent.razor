@@ -1,0 +1,45 @@
+﻿
+<tr>
+    <td>
+        @Floor.FloorNumber
+    </td>
+    <td>
+        @Floor.PersonCount
+    </td>
+    <td class="@(GetElevatorCurrentFloorClass())">
+        @if(IsElevatorCurrentFloor)
+        {
+            <b>@ElevatorPersonCount     <span>goes to ->(@ElevatorTargetFloor)</span></b>
+        }
+    </td>
+</tr>
+
+@code {
+    [Parameter]
+    public FloorStateDto Floor { get; set; }
+
+    [Parameter]
+    public bool IsElevatorCurrentFloor { get; set; }
+
+    [Parameter]
+    public int ElevatorPersonCount { get; set; }
+
+    [Parameter]
+    public int ElevatorTargetFloor { get; set; }
+
+    private string GetElevatorCurrentFloorClass()
+    {
+        if(IsElevatorCurrentFloor)
+        {
+            return ELEVATOR_CELL_CLASS;
+        } else if(Floor.FloorNumber == ElevatorTargetFloor)
+        {
+            return ELEVATOR_TARGET_CELL_CLASS;
+        }
+        return NOT_ELEVATOR_CELL_CLASS;
+    }
+
+    private const string ELEVATOR_CELL_CLASS = "elevator_cell";
+    private const string NOT_ELEVATOR_CELL_CLASS = "not_elevator_cell";
+    private const string ELEVATOR_TARGET_CELL_CLASS = "target_elevator_cell";
+}

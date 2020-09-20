@@ -1,0 +1,27 @@
+﻿@page "/blog"
+@inject IHttpClientFactory ClientFactory;
+
+
+<div>
+    @if (_blogs != null)
+    {
+
+    } else
+    {
+        <div>Waiting for blogs</div>
+    }
+</div>
+
+@code {
+
+    private BlogDto[] _blogs;
+    private string _output = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var client = ClientFactory.CreateClient("BlogAPI");
+        _blogs = await client.GetFromJsonAsync<BlogDto[]>("api/blog");
+        _output = $"Blogs received: {(_blogs != null ? _blogs.Count().ToString() : "NULL")}";
+
+    }
+}

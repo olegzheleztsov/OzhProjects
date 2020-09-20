@@ -1,0 +1,15 @@
+﻿
+    <div class="mat-layout-grid-inner">
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+            <MatSelect Label="Pick the model" Outlined="true" TValue="string" @bind-Value="@_selectedModel">
+                <MatOptionString></MatOptionString>
+                @foreach (var modelName in ModelTypes)
+                {
+                    <MatOptionString TValue="string" Value="@modelName">@modelName</MatOptionString>
+                }
+            </MatSelect>
+        </div>
+        <div class="mat-layout-grid-cell mat-layout-grid-cell-align-middle mat-layout-grid-cell-span-3">
+            <MatButton Outlined="true" OnClick="@OnAddElement" Disabled="@(string.IsNullOrWhiteSpace(_selectedModel))">Add Element</MatButton>
+        </div>
+    </div>

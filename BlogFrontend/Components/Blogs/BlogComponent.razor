@@ -1,0 +1,48 @@
+﻿@page "/post/{id}"
+
+
+@if (Blog == null)
+{
+    <IndeterminateProgress></IndeterminateProgress>
+}
+else
+{
+    <div class="mat-layout-grid mat-layout-grid-align-center">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2"></div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-8">
+                <div>
+                    <MatHeadline4>
+                        @BlogTitle
+                    </MatHeadline4>
+                    <MatHeadline5>
+                        @BlogSubTitle
+                    </MatHeadline5>
+                    <MatCaption>
+                        @BlogAuthorInfo
+                    </MatCaption>
+                    <MatBody1>
+                        @BlogContent
+                    </MatBody1>
+                    <div style="display: flex; flex-direction: row; justify-content: end; align-items: center">
+                        <div style="align-self: end; margin: 8px">
+                            <MatButton Raised="true" OnClick="OnEdit">Edit</MatButton>
+                        </div>
+                        <div style="align-self: end; margin: 8px">
+                            <MatButton Outlined="true" OnClick="OnDelete">Delete</MatButton>
+                        </div>
+                    </div>
+                    @*<div class="mat-layout-grid-inner mat-layout-grid-align-right mat-layout-grid-cell-span-12" style="max-width: 800px;">
+                        <div class="mat-layout-grid-cell">
+                            
+                        </div>
+                        <div class="mat-layout-grid-cell">
+                            
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-2"></div>
+        </div>
+    </div>
+}

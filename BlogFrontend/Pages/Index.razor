@@ -1,0 +1,112 @@
+﻿@page "/II"
+@using Microsoft.AspNetCore.SignalR.Client
+@using ElevatorLib.Dtos
+@using Blazor.Extensions.Canvas.Canvas2D
+@using Blazor.Extensions
+@using ElevatorClient.Components
+
+
+
+<div>
+    <div>
+        Building state
+    </div>
+    <BuildingComponent Building="LastBuildingSnapshot" />
+</div>
+
+<div class="control-container">
+    <div>Building Settings</div>
+    <div class="key-value">
+        <div class="settings-title">Generation fill rate</div>
+        <input type="text" @bind="GenerationFillingRate" @bind:event="oninput" />
+        <button @onclick="@(async (e) => await UpdateGenerationFillingRate(e))"></button>
+    </div>
+    <div class="key-value">
+        <div class="settings-title">Generation Check Interval</div>
+        <input type="text" @bind="GenerationCheckInterval" @bind:event="oninput" />
+        <button @onclick="@(async (e) => await UpdateGenerationCheckInterval(e))"></button>
+    </div>
+    <div class="key-value">
+        <div class="settings-title">Max Persons Per Building</div>
+        <input type="text" @bind="MaxPersonsPerBuilding" @bind:event="oninput" />
+        <button @onclick="@(async (e) => await UpdateMaxPersonsPerBuilding(e))"></button>
+    </div>
+    <div class="key-value">
+        <div class="settings-title">Interval between generation single person</div>
+        <input type="text" @bind="IntervalBetweenGenerationSinglePerson" @bind:event="oninput" />
+        <button @onclick="@(async (e) => await UpdateIntervalBetweenGenerationSinglePerson(e))"></button>
+    </div>
+</div>
+
+
+@*<div class="form-group">
+    <label>
+        @info
+    </label>
+    <div>
+        @info2
+    </div>
+    <div>
+        Hello trtr
+    </div>
+    <button @onclick="OnButtonClick">Click Me</button>
+    <BECanvas Width="300" Height="400" @ref="_canvasReference"></BECanvas>
+</div>*@
+
+@code {
+    //public HubConnection hubConnection;
+    //public List<BuildingActionSnaphotDto> snaphsots = new List<BuildingActionSnaphotDto>();
+    //public string info { get; set; } = string.Empty;
+    //public string info2 { get; set; } = string.Empty;
+    //private Canvas2DContext _context;
+    //protected BECanvasComponent _canvasReference;
+
+    //private BuildingStateDto LastBuildingSnapshot
+    //    => snaphsots.Count == 0 ? null : snaphsots[snaphsots.Count - 1].Building;
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    //Logger.LogInformation("I logged it");
+    //    hubConnection = new HubConnectionBuilder().WithUrl("http://localhost:5100/elevator").Build();
+    //    hubConnection.On<BuildingActionSnaphotDto>("SendBuildingState", building =>
+    //    {
+    //        snaphsots.Add(building);
+    //        if(snaphsots.Count > 100)
+    //        {
+    //            snaphsots.RemoveAt(0);
+    //        }
+
+    //        info = $"received: {snaphsots.Count}";
+    //        StateHasChanged();
+    //    });
+    //    hubConnection.On<string>("Test", str =>
+    //    {
+    //        info2 = str;
+    //        StateHasChanged();
+    //    });
+
+
+    //    await hubConnection.StartAsync().ConfigureAwait(false);
+    //    //Logger.LogInformation($"signalR state: {hubConnection.State}");
+    //}
+
+    //protected override async Task OnAfterRenderAsync(bool firstRender)
+    //{
+    //    _context = await _canvasReference.CreateCanvas2DAsync();
+    //    await _context.SetFillStyleAsync("green");
+    //    await _context.FillRectAsync(10, 100, 100, 100);
+    //    await _context.SetFontAsync("48px serif");
+    //    await _context.StrokeTextAsync("Hello Blazor!!!", 10, 100);
+    //}
+
+    //public void Dispose()
+    //{
+    //    _ = hubConnection.DisposeAsync();
+    //}
+
+
+    //private void OnButtonClick()
+    //{
+    //    info = "From button info";
+    //}
+}

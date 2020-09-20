@@ -1,0 +1,52 @@
+﻿@page "/test"
+
+<p>
+    You have clicked the button @Count times
+</p>
+<button @onclick="@Click">Click Me</button>
+
+<p>You have selected @WebApplication as the web application</p>
+<select @onchange="@Change">
+    <option value="">Select...</option>
+    <option value="Blazor">Blazor</option>
+    <option value="MVC">MVC</option>
+    <option value="WebForms">WebForms</option>
+</select>
+
+<hr />
+<p>You text displayed is <strong>@DisplayedValue</strong>.</p>
+<input type="text" @onchange="@ChangeValue" @onblur="@DisplayTheValue" />
+
+<hr />
+<p>Binding</p>
+<p>You text displayed is <strong>@BindedValue</strong>.</p>
+<input type="text" @bind="@BindedValue" />
+
+<hr />
+<p>Binding on input is <strong>@BindedInputValue</strong>.</p>
+<input type="text" @bind="@BindedInputValue" @bind:event="oninput" />
+
+@code {
+    public int Count { get; set; }
+
+    private void Click(MouseEventArgs mouseEventArgs)
+        => Count++;
+
+    public string WebApplication { get; set; }
+
+    private void Change(ChangeEventArgs changeEventArgs)
+        => WebApplication = changeEventArgs.Value.ToString();
+
+    public string Value { get; set; }
+    public string DisplayedValue { get; set; }
+
+    private void ChangeValue(ChangeEventArgs changeEventArgs)
+        => Value = changeEventArgs.Value.ToString();
+
+    private void DisplayTheValue(FocusEventArgs focusEventArgs)
+        => DisplayedValue = Value;
+
+    public string BindedValue { get; set; }
+
+    public string BindedInputValue { get; set; }
+}
