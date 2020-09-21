@@ -1,5 +1,19 @@
 ﻿@page "/"
+@using System.Security.Claims
 
+<AuthorizeView Roles="Administrator">
+    <Authorized>
+        The user: @context.User.FindFirst(ClaimTypes.Name).Value is authorized
+        <a href="Logout">Log out</a>
+    </Authorized>
+    <NotAuthorized>
+        <a href="Registration">Register</a>
+        <a href="Login">Log in</a>
+    </NotAuthorized>
+</AuthorizeView>
+
+<button @onclick="OnSampleAuthAccess" >Sample Auth Button</button>
+<p>@_authOutput</p>
 
 @if (_blogs?.Count() > 0)
 {
