@@ -1,4 +1,6 @@
 ﻿@page "/post/edit/{id}"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
 
 @if (Blog == null)
 {
