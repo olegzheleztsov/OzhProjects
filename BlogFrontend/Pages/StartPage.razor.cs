@@ -16,8 +16,7 @@ namespace ElevatorClient.Pages
         [CascadingParameter]
         public Task<AuthenticationState> AuthState { get; set; }
 
-        private string _authOutput = string.Empty;
-        private int _counter = 0;
+
         
         private async Task OnSampleAuthAccess()
         {
@@ -26,13 +25,11 @@ namespace ElevatorClient.Pages
 
             if (user.Identity.IsAuthenticated)
             {
-                _counter++;
-                _authOutput =
-                    $"Authenticated: {user.Identity.Name}, Auth Type: {user.Identity.AuthenticationType}, Counter: {_counter}";
+
             }
             else
             {
-                _authOutput = $"Not authenticated: {_counter}";
+
             }
         }
 

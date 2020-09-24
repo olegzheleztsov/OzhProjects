@@ -1,0 +1,2 @@
+﻿back url
+https://oz-blog-backend.azurewebsites.net/

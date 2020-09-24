@@ -68,6 +68,7 @@ namespace ElevatorClient.Services
             }
 
             await _localStorage.SetItemAsync("authToken", result.Token).ConfigureAwait(false);
+            (_authStateProvider as AuthStateProvider)?.NotifyUserAuthentication(result.ToString());
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", result.Token);
             return new AuthResponseDto() {IsAuthSuccessful = true};
         }
