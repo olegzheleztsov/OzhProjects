@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AspNetCore.Identity.Mongo;
 using BlogIdentityService.Config;
+using BlogIdentityService.Config.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -21,18 +24,22 @@ namespace BlogIdentityService
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
+        
+        private IWebHostEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<JwtSettings>(Configuration.GetSection("JWTSettings"));
             
+            services.Configure<JwtSettings>(Configuration.GetSection("JWTSettings"));
+            services.Configure<Admin>(Configuration.GetSection("Admin"));
             
             services.AddCors(policy =>
             {
@@ -76,6 +83,7 @@ namespace BlogIdentityService
             
             services.AddControllers();
             services.AddScoped<IRoleConfiguration, RoleConfiguration>();
+            services.AddSingleton<IDefaultRoleSource, DefaultRoleSource>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -97,8 +105,45 @@ namespace BlogIdentityService
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
+            /*
             roleConfiguration.CreateRolesAsync(serviceProvider.GetService<RoleManager<ApplicationRole>>()).Wait();
-            roleConfiguration.CreateAdministratorAsync(serviceProvider.GetService<UserManager<ApplicationUser>>()).Wait();
+            var logger = serviceProvider.GetService<ILogger<Startup>>();
+            var admin = Configuration.GetSection("Admin").Get<Admin>();
+            logger.LogDebug(admin.ToString());
+            
+            LogEnvironmentValues(logger);
+            */
+            var admin = Configuration.GetSection("Admin").Get<Admin>();
+            roleConfiguration.CreateAdministratorAsync(serviceProvider.GetService<UserManager<ApplicationUser>>(), admin).Wait();
+        }
+
+        private void LogEnvironmentValues(ILogger<Startup> logger)
+        {
+            logger.LogDebug($"{nameof(Environment.WebRootPath)}: {Environment.WebRootPath}");
+            logger.LogDebug($"{nameof(Environment.ContentRootPath)}: {Environment.ContentRootPath}");
+
+            var provider = Environment.ContentRootFileProvider;
+            var contents = provider.GetDirectoryContents("");
+            foreach (var fileInfo in contents)
+            {
+                logger.LogDebug($"{fileInfo.Name}, is directory: {fileInfo.IsDirectory}, path: {fileInfo.PhysicalPath}");
+                if (fileInfo.IsDirectory)
+                {
+                    continue;
+                }
+
+                using var stream =  fileInfo.CreateReadStream();
+                using var reader = new StreamReader(stream);
+                try
+                {
+                    string text = reader.ReadToEnd();
+                    logger.LogDebug(text);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError("Read error");
+                }
+            }
         }
     }
 }

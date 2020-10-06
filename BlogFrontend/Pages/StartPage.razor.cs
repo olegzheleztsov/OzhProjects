@@ -37,5 +37,10 @@ namespace ElevatorClient.Pages
         {
             _blogs = await BlogService.GetBlogs().ConfigureAwait(false);
         }
+
+        private async Task OnLoginDefaultUser()
+        {
+            
+        }
     }
 }

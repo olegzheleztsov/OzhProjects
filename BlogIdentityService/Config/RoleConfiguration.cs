@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AspNetCore.Identity.Mongo.Stores;
+using BlogIdentityService.Config.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace BlogIdentityService.Config
@@ -15,83 +16,42 @@ namespace BlogIdentityService.Config
     public class RoleConfiguration : IRoleConfiguration
     {
         
+        private readonly IDefaultRoleSource _defaultRoleSource;
+
+        public RoleConfiguration(IDefaultRoleSource source)
+        {
+            _defaultRoleSource = source;
+        }
+        
         /// <inheritdoc />
         public async Task CreateRolesAsync(RoleManager<ApplicationRole> roleManager)
         {
-            List<ApplicationRole> roleList = new List<ApplicationRole>()
-            {
-                new ApplicationRole()
-                {
-                    Name = "Viewer",
-                    NormalizedName = "VIEWER"
-                },
-                new ApplicationRole()
-                {
-                    Name = "Administrator",
-                    NormalizedName = "ADMINISTRATOR"
-                }
-            };
-
-            foreach (var role in roleList)
+            var roles = await _defaultRoleSource.GetDefaultRoles().ConfigureAwait(false);
+            foreach (var role in roles)
             {
                 if (!(await roleManager.RoleExistsAsync(role.Name).ConfigureAwait(false)))
                 {
                     await roleManager.CreateAsync(role).ConfigureAwait(false);
                 }
             }
-            /*
-            var viewerRole = await roleStore.FindByNameAsync("Viewer", CancellationToken.None).ConfigureAwait(false);
-            if (viewerRole == null)
-            {
-                var result = await roleStore.CreateAsync(new ApplicationRole()
-                {
-                    Name = "Viewer",
-                    NormalizedName = "VIEWER"
-                }, CancellationToken.None).ConfigureAwait(false);
-                if (!result.Succeeded)
-                {
-                    throw new Exception($"Cannot create role Viewer");
-                }
-            }
-            
-            var adminRole = await roleStore.FindByNameAsync("Administrator", CancellationToken.None).ConfigureAwait(false);
-            if (adminRole == null)
-            {
-                var result = await roleStore.CreateAsync(new ApplicationRole()
-                {
-                    Name = "Administrator",
-                    NormalizedName = "ADMINISTRATOR"
-                }, CancellationToken.None).ConfigureAwait(false);
-                if (!result.Succeeded)
-                {
-                    throw new Exception($"Cannot create role Administrator");
-                }
-            }    
-            */
         }
 
-        public async Task CreateAdministratorAsync(UserManager<ApplicationUser> userManager)
+        public async Task CreateAdministratorAsync(UserManager<ApplicationUser> userManager, Admin adminConfig)
         {
-            string adminEmail = "zheleztsovoleh@gmail.com";
-            string adminPassword = "87e898AA";
-            
-            var admin = await userManager.FindByEmailAsync(adminEmail).ConfigureAwait(false);
+            var admin = await userManager.FindByEmailAsync(adminConfig.Email).ConfigureAwait(false);
             if (admin == null)
             {
-                ApplicationUser user = new ApplicationUser()
+                var user = new ApplicationUser()
                 {
-                    UserName = adminEmail,
-                    Email = adminEmail,
+                    UserName = adminConfig.Email,
+                    Email = adminConfig.Email,
                     EmailConfirmed = true
                 };
-                IdentityResult result = await userManager.CreateAsync(user, adminPassword).ConfigureAwait(false);
+                var result = await userManager.CreateAsync(user, adminConfig.Password).ConfigureAwait(false);
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(user, "Administrator").ConfigureAwait(false);
-                }
-                else
-                {
-                    //throw new Exception("Cannot create admin user");
+                    var adminRole = await _defaultRoleSource.GetDefaultAdminRole().ConfigureAwait(false);
+                    await userManager.AddToRoleAsync(user, adminRole.Name).ConfigureAwait(false);
                 }
             }
         }

@@ -3,16 +3,18 @@
 // All rights reserved, for personal using only
 // 
 
+using BlogIdentityService.Config.Interfaces;
+
 namespace BlogIdentityService.Config
 {
-    public class JwtSettings
+    public class JwtSettings : IJwtSettings
     {
         public string SecurityKey { get; set; }
-        
+
         public string ValidIssuer { get; set; }
-        
+
         public string ValidAudience { get; set; }
-        
+
         public int ExpiryInMinutes { get; set; }
     }
 }

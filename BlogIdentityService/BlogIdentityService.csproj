@@ -1,17 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
-    <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <PackageReference Include="AspNetCore.Identity.Mongo" Version="6.7.2" />
-      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\ElevatorLib\ElevatorLib.csproj" />
-    </ItemGroup>
-
-
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>4804930c-f17c-4db8-92a9-216b7d40e7e4</UserSecretsId>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.Identity.Mongo" Version="6.7.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ElevatorLib\ElevatorLib.csproj" />
+  </ItemGroup>
 </Project>

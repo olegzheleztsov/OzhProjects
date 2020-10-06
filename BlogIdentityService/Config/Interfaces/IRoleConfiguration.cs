@@ -6,12 +6,12 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace BlogIdentityService.Config
+namespace BlogIdentityService.Config.Interfaces
 {
     public interface IRoleConfiguration
     {
         Task CreateRolesAsync(RoleManager<ApplicationRole> roleStore);
 
-        Task CreateAdministratorAsync(UserManager<ApplicationUser> userManager);
+        Task CreateAdministratorAsync(UserManager<ApplicationUser> userManager, Admin admin);
     }
 }

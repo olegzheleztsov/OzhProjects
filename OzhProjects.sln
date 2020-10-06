@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogFrontend.Tests", "BlogF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogIdentityService", "BlogIdentityService\BlogIdentityService.csproj", "{404DE5B4-428B-409F-B6E0-9DA56A2628EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogIdentityService.Tests", "BlogIdentityService.Tests\BlogIdentityService.Tests.csproj", "{693C635C-4FA2-4E3F-B651-67D0C7C97799}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{404DE5B4-428B-409F-B6E0-9DA56A2628EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{404DE5B4-428B-409F-B6E0-9DA56A2628EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{404DE5B4-428B-409F-B6E0-9DA56A2628EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{693C635C-4FA2-4E3F-B651-67D0C7C97799}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{693C635C-4FA2-4E3F-B651-67D0C7C97799}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{693C635C-4FA2-4E3F-B651-67D0C7C97799}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{693C635C-4FA2-4E3F-B651-67D0C7C97799}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
